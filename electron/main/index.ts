@@ -119,12 +119,21 @@ ipcMain.handle("open-win", (_, arg) => {
     childWindow.loadFile(indexHtml, { hash: arg });
   }
 });
-
+let childWindow;;
 app.on("ready", () => {
-  // Register a global keyboard shortcut
-  globalShortcut.register("Ctrl+Alt+T", () => {
-    // Open the application using the shell module
-    shell.openPath("C:\Users\kabee\Desktop\roaster\README.md");
+  // Register a shortcut listener
+  const ret = globalShortcut.register("Ctrl+Alt+T", () => {
+    childWindow = new BrowserWindow({
+      width: 800,
+      height: 600,
+      // Creating a Frameless Window
+      frame: false,
+      webPreferences: {
+        nodeIntegration: true,
+      },
+      resizable: false,
+    });
+    childWindow.loadURL("https://www.google.com/");
   });
 });
 
