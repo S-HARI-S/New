@@ -120,11 +120,43 @@ ipcMain.handle("open-win", (_, arg) => {
   }
 });
 
+
+// app.on("ready", () => {
+//   // Register a global keyboard shortcut
+//   globalShortcut.register("Ctrl+Alt+T", () => {
+//     // Open the application using the shell module
+//     shell.openPath("");
+//   });
+// });
+
+// // Unregister the shortcut when the app is about to quit
+// app.on("will-quit", () => {
+//   globalShortcut.unregister("Ctrl+Alt+T");
+// });
+
+
+let shortcutRegistered = false;
+let window: BrowserWindow | null = null;
+
 app.on("ready", () => {
   // Register a global keyboard shortcut
   globalShortcut.register("Ctrl+Alt+T", () => {
-    // Open the application using the shell module
-    shell.openPath("C:\Users\kabee\Desktop\roaster\README.md");
+    if (window !== null) {
+      // If a window is open, close it and set the `window` variable to `null`
+      window.close();
+      window = null;
+    } else {
+      // If no window is open, open the specified path and store a reference to the window
+      window = new BrowserWindow({ 
+        width: 800, 
+        height: 600,
+        frame: false // Set the frame option to false to create a frameless window
+      });
+      window.loadURL("file:///path/to/file.html");
+      window.on("closed", () => {
+        window = null;
+      });
+    }
   });
 });
 
@@ -132,3 +164,5 @@ app.on("ready", () => {
 app.on("will-quit", () => {
   globalShortcut.unregister("Ctrl+Alt+T");
 });
+
+
