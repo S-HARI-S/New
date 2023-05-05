@@ -138,6 +138,7 @@ ipcMain.handle("open-win", (_, arg) => {
 let shortcutRegistered = false;
 let window: BrowserWindow | null = null;
 
+
 app.on("ready", () => {
   // Register a global keyboard shortcut
   globalShortcut.register("Ctrl+Alt+T", () => {
@@ -164,5 +165,4 @@ app.on("ready", () => {
 app.on("will-quit", () => {
   globalShortcut.unregister("Ctrl+Alt+T");
 });
-
 
