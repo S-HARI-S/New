@@ -140,26 +140,43 @@ let window: BrowserWindow | null = null;
 
 
 app.on("ready", () => {
+  let mainWindow = null; // Declare a variable to store the reference to the main window
+
   // Register a global keyboard shortcut
   globalShortcut.register("Ctrl+Alt+T", () => {
-    if (window !== null) {
-      // If a window is open, close it and set the `window` variable to `null`
-      window.close();
-      window = null;
+    if (mainWindow !== null) {
+      // If the main window is open, hide it and set the `mainWindow` variable to `null`
+      mainWindow.hide();
+      mainWindow = null;
     } else {
-      // If no window is open, open the specified path and store a reference to the window
-      window = new BrowserWindow({ 
-        width: 800, 
+      // If the main window is not open, open the specified path and store a reference to the main window
+      mainWindow = new BrowserWindow({
+        width: 800,
         height: 600,
-        frame: false // Set the frame option to false to create a frameless window
+        frame: false,
+        webPreferences: {
+          nodeIntegration: true
+        },
+        resizable: false,
+        skipTaskbar: true,
       });
-      window.loadURL("file:///path/to/file.html");
-      window.on("closed", () => {
-        window = null;
+
+      mainWindow.loadURL("https://www.google.com/");
+
+      mainWindow.on("closed", () => {
+        mainWindow = null;
+      });
+
+      // Hide the parent window when the child window is opened
+      mainWindow.once("ready-to-show", () => {
+        if (window !== null) {
+          window.hide();
+        }
       });
     }
   });
 });
+
 
 // Unregister the shortcut when the app is about to quit
 app.on("will-quit", () => {
