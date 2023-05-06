@@ -153,7 +153,7 @@ app.on("ready", () => {
       window = new BrowserWindow({
         width: 800,
         height: 600,
-        // transparent: true,
+        transparent: true,
         skipTaskbar: true,
         frame: false, // Set the frame option to false to create a frameless window
         resizable: false,
