@@ -133,10 +133,14 @@ ipcMain.handle("open-win", (_, arg) => {
 //   globalShortcut.unregister("Ctrl+Alt+T");
 // });
 
+const path = require("path");
+const url_new = require("url");
 let shortcutRegistered = false;
 let window: BrowserWindow | null = null;
 
+
 app.on("ready", () => {
+  
   // Register a global keyboard shortcut
   globalShortcut.register("Ctrl+Alt+T", () => {
     if (window !== null) {
@@ -149,12 +153,15 @@ app.on("ready", () => {
       window = new BrowserWindow({
         width: 800,
         height: 600,
-        transparent: true,
+        // transparent: true,
         skipTaskbar: true,
         frame: false, // Set the frame option to false to create a frameless window
         resizable: false,
       });
-      window.loadURL("https://www.google.com/");
+
+      const filePath = path.resolve("public", "index.html");
+
+      window.loadURL(filePath);
       window.on("closed", () => {
         window = null;
       });

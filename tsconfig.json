@@ -22,6 +22,6 @@
       ]
     },
   },
-  "include": ["src", "electron"],
+  "include": ["src", "electron", "public/samples", "public/TextBox.jsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
