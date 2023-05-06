@@ -144,7 +144,7 @@ app.on("ready", () => {
       window.close();
       window = null;
     } else {
-      // win?.hide();
+      win?.hide();
       // If no window is open, open the specified path and store a reference to the window
       window = new BrowserWindow({
         width: 800,
