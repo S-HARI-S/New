@@ -120,7 +120,6 @@ ipcMain.handle("open-win", (_, arg) => {
   }
 });
 
-
 // app.on("ready", () => {
 //   // Register a global keyboard shortcut
 //   globalShortcut.register("Ctrl+Alt+T", () => {
@@ -134,10 +133,8 @@ ipcMain.handle("open-win", (_, arg) => {
 //   globalShortcut.unregister("Ctrl+Alt+T");
 // });
 
-
 let shortcutRegistered = false;
 let window: BrowserWindow | null = null;
-
 
 app.on("ready", () => {
   let mainWindow = null; // Declare a variable to store the reference to the main window
@@ -149,6 +146,7 @@ app.on("ready", () => {
       mainWindow.hide();
       mainWindow = null;
     } else {
+<<<<<<< HEAD
       // If the main window is not open, open the specified path and store a reference to the main window
       mainWindow = new BrowserWindow({
         width: 800,
@@ -172,6 +170,21 @@ app.on("ready", () => {
         if (window !== null) {
           window.hide();
         }
+=======
+      win?.hide();
+      // If no window is open, open the specified path and store a reference to the window
+      window = new BrowserWindow({
+        width: 800,
+        height: 600,
+        transparent: true,
+        skipTaskbar: true,
+        frame: false, // Set the frame option to false to create a frameless window
+        resizable: false,
+      });
+      window.loadURL("https://www.google.com/");
+      window.on("closed", () => {
+        window = null;
+>>>>>>> ea55364fdb6c24a7d048a38041477a401f26b170
       });
     }
   });
@@ -182,4 +195,3 @@ app.on("ready", () => {
 app.on("will-quit", () => {
   globalShortcut.unregister("Ctrl+Alt+T");
 });
-
